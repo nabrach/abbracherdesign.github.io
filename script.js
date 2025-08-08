@@ -75,3 +75,94 @@ if (window.IntersectionObserver) {
         observer.observe(item);
     });
 }
+
+// Project details modal
+document.addEventListener('DOMContentLoaded', function() {
+    const workItems = document.querySelectorAll('.work-item');
+    const modal = document.getElementById('project-modal');
+    if (!workItems.length || !modal) return;
+
+    const modalDialog = modal.querySelector('.modal-dialog');
+    const modalCloseButton = modal.querySelector('.modal-close');
+    const modalBackdrop = modal.querySelector('.modal-backdrop');
+    const modalImage = modal.querySelector('.modal-image');
+    const modalTitle = modal.querySelector('.modal-title');
+    const modalCategory = modal.querySelector('.modal-category');
+    const modalDescription = modal.querySelector('.modal-description');
+
+    const projectKeyToImage = {
+        'palate': 'images/palate-logo.png',
+        'bar-kada': 'images/bar-kada-logo.jpg',
+        'revitalize': 'images/revitalize-logo.jpg',
+        'food-fuel': 'images/food-for-fuel-logo.jpg',
+        'magazine': 'images/magazine-samples.png',
+        'more': 'images/profile.png'
+    };
+
+    const projectKeyToDescription = {
+        'palate': 'A clean, modern logo exploration focusing on taste, balance, and culinary craftsmanship.',
+        'bar-kada': 'Hospitality brand mark emphasizing warmth, community, and elevated service.',
+        'revitalize': 'Healthcare-oriented identity reflecting clarity, renewal, and approachable care.',
+        'food-fuel': 'Refreshed logo and color system designed for energy, performance, and trust.',
+        'magazine': 'Editorial layouts showcasing hierarchy, typography, and grid-driven compositions.',
+        'more': 'A curated selection of additional projects spanning branding and print design.'
+    };
+
+    let previouslyFocusedElement = null;
+
+    function openModalForWorkItem(workItem) {
+        previouslyFocusedElement = document.activeElement;
+
+        const placeholder = workItem.querySelector('.image-placeholder');
+        const projectKey = placeholder ? placeholder.getAttribute('data-project') : '';
+        const titleText = workItem.querySelector('.work-info h3')?.textContent?.trim() || 'Project Title';
+        const categoryText = workItem.querySelector('.work-info p')?.textContent?.trim() || '';
+        const imagePath = projectKeyToImage[projectKey] || '';
+        const descriptionText = projectKeyToDescription[projectKey] || 'Detailed case study coming soon. This placeholder describes the goals, approach, and outcomes for the selected project.';
+
+        modalTitle.textContent = titleText;
+        modalCategory.textContent = categoryText;
+        modalDescription.textContent = descriptionText;
+
+        if (imagePath) {
+            modalImage.src = imagePath;
+            modalImage.alt = titleText;
+            modalImage.style.display = 'block';
+        } else {
+            modalImage.removeAttribute('src');
+            modalImage.alt = '';
+            modalImage.style.display = 'none';
+        }
+
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        modalCloseButton.focus();
+    }
+
+    function closeModal() {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        modalImage.removeAttribute('src');
+        modalImage.alt = '';
+        if (previouslyFocusedElement && typeof previouslyFocusedElement.focus === 'function') {
+            previouslyFocusedElement.focus();
+        }
+    }
+
+    workItems.forEach(item => {
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', function() {
+            openModalForWorkItem(item);
+        });
+    });
+
+    modalCloseButton.addEventListener('click', closeModal);
+    modalBackdrop.addEventListener('click', closeModal);
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('open')) {
+            closeModal();
+        }
+    });
+});
