@@ -76,93 +76,87 @@ if (window.IntersectionObserver) {
     });
 }
 
-// Project details modal
+// Case study detail page population (for case-study.html)
 document.addEventListener('DOMContentLoaded', function() {
-    const workItems = document.querySelectorAll('.work-item');
-    const modal = document.getElementById('project-modal');
-    if (!workItems.length || !modal) return;
+    const caseRoot = document.querySelector('[data-case-root]');
+    if (!caseRoot) return;
 
-    const modalDialog = modal.querySelector('.modal-dialog');
-    const modalCloseButton = modal.querySelector('.modal-close');
-    const modalBackdrop = modal.querySelector('.modal-backdrop');
-    const modalImage = modal.querySelector('.modal-image');
-    const modalTitle = modal.querySelector('.modal-title');
-    const modalCategory = modal.querySelector('.modal-category');
-    const modalDescription = modal.querySelector('.modal-description');
+    const params = new URLSearchParams(window.location.search);
+    const project = params.get('project') || '';
 
-    const projectKeyToImage = {
-        'palate': 'images/palate-logo.png',
-        'bar-kada': 'images/bar-kada-logo.jpg',
-        'revitalize': 'images/revitalize-logo.jpg',
-        'food-fuel': 'images/food-for-fuel-logo.jpg',
-        'magazine': 'images/magazine-samples.png',
-        'more': 'images/profile.png'
+    const data = {
+        'palate': {
+            title: 'Palate Logo Design',
+            category: 'Branding & Identity',
+            image: 'images/palate-logo.png',
+            description: 'A clean, modern logo exploration focusing on taste, balance, and culinary craftsmanship. This placeholder case study outlines the challenge, process, and final outcome.'
+        },
+        'bar-kada': {
+            title: 'Bar-Kada Hospitality',
+            category: 'Logo Design',
+            image: 'images/bar-kada-logo.jpg',
+            description: 'Hospitality brand mark emphasizing warmth, community, and elevated service. This placeholder includes discovery, sketches, and refined wordmark development.'
+        },
+        'revitalize': {
+            title: 'Revitalize IV Solutions',
+            category: 'Logo Design',
+            image: 'images/revitalize-logo.jpg',
+            description: 'Healthcare-oriented identity reflecting clarity, renewal, and approachable care. Placeholder narrative with concept directions and rationale.'
+        },
+        'food-fuel': {
+            title: 'Food For Fuel',
+            category: 'Logo Redesign',
+            image: 'images/food-for-fuel-logo.jpg',
+            description: 'Refreshed logo and color system designed for energy, performance, and trust. Placeholder case study covering before/after and systemization.'
+        },
+        'magazine': {
+            title: 'Magazine Samples',
+            category: 'Print Design',
+            image: 'images/magazine-samples.png',
+            description: 'Editorial layouts showcasing hierarchy, typography, and grid-driven compositions. Placeholder overview of spreads and typographic choices.'
+        },
+        'more': {
+            title: 'More Work',
+            category: 'Portfolio Collection',
+            image: 'images/profile.png',
+            description: 'A curated selection of additional projects spanning branding and print design. Placeholder gallery and short write-ups.'
+        }
     };
 
-    const projectKeyToDescription = {
-        'palate': 'A clean, modern logo exploration focusing on taste, balance, and culinary craftsmanship.',
-        'bar-kada': 'Hospitality brand mark emphasizing warmth, community, and elevated service.',
-        'revitalize': 'Healthcare-oriented identity reflecting clarity, renewal, and approachable care.',
-        'food-fuel': 'Refreshed logo and color system designed for energy, performance, and trust.',
-        'magazine': 'Editorial layouts showcasing hierarchy, typography, and grid-driven compositions.',
-        'more': 'A curated selection of additional projects spanning branding and print design.'
+    const fallback = {
+        title: 'Project',
+        category: 'Case Study',
+        image: '',
+        description: 'Detailed case study coming soon. This placeholder describes the goals, approach, and outcomes for the selected project.'
     };
 
-    let previouslyFocusedElement = null;
+    const model = data[project] || fallback;
 
-    function openModalForWorkItem(workItem) {
-        previouslyFocusedElement = document.activeElement;
+    const titleEl = document.querySelector('[data-case-title]');
+    const subtitleEl = document.querySelector('[data-case-subtitle]');
+    const imageEl = document.querySelector('[data-case-image]');
+    const bodyEl = document.querySelector('[data-case-body]');
 
-        const placeholder = workItem.querySelector('.image-placeholder');
-        const projectKey = placeholder ? placeholder.getAttribute('data-project') : '';
-        const titleText = workItem.querySelector('.work-info h3')?.textContent?.trim() || 'Project Title';
-        const categoryText = workItem.querySelector('.work-info p')?.textContent?.trim() || '';
-        const imagePath = projectKeyToImage[projectKey] || '';
-        const descriptionText = projectKeyToDescription[projectKey] || 'Detailed case study coming soon. This placeholder describes the goals, approach, and outcomes for the selected project.';
-
-        modalTitle.textContent = titleText;
-        modalCategory.textContent = categoryText;
-        modalDescription.textContent = descriptionText;
-
-        if (imagePath) {
-            modalImage.src = imagePath;
-            modalImage.alt = titleText;
-            modalImage.style.display = 'block';
+    if (titleEl) titleEl.textContent = model.title;
+    if (subtitleEl) subtitleEl.textContent = model.category;
+    if (imageEl) {
+        if (model.image) {
+            imageEl.src = model.image;
+            imageEl.alt = model.title;
+            imageEl.style.display = 'block';
         } else {
-            modalImage.removeAttribute('src');
-            modalImage.alt = '';
-            modalImage.style.display = 'none';
-        }
-
-        modal.classList.add('open');
-        modal.setAttribute('aria-hidden', 'false');
-        document.body.style.overflow = 'hidden';
-        modalCloseButton.focus();
-    }
-
-    function closeModal() {
-        modal.classList.remove('open');
-        modal.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-        modalImage.removeAttribute('src');
-        modalImage.alt = '';
-        if (previouslyFocusedElement && typeof previouslyFocusedElement.focus === 'function') {
-            previouslyFocusedElement.focus();
+            imageEl.removeAttribute('src');
+            imageEl.alt = '';
+            imageEl.style.display = 'none';
         }
     }
-
-    workItems.forEach(item => {
-        item.style.cursor = 'pointer';
-        item.addEventListener('click', function() {
-            openModalForWorkItem(item);
-        });
-    });
-
-    modalCloseButton.addEventListener('click', closeModal);
-    modalBackdrop.addEventListener('click', closeModal);
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal.classList.contains('open')) {
-            closeModal();
-        }
-    });
+    if (bodyEl) {
+        bodyEl.innerHTML = '' +
+            '<h3>Overview</h3>' +
+            `<p>${model.description}</p>` +
+            '<h3>Process</h3>' +
+            '<p>Research, moodboards, sketching, vector exploration, refinement, and delivery.</p>' +
+            '<h3>Outcomes</h3>' +
+            '<p>Clear visual identity, consistent system, and memorable brand touchpoints.</p>';
+    }
 });
