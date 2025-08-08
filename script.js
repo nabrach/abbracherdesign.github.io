@@ -88,37 +88,37 @@ document.addEventListener('DOMContentLoaded', function() {
         'palate': {
             title: 'Palate Logo Design',
             category: 'Branding & Identity',
-            image: 'images/palate-logo.png',
+            image: '',
             description: 'A clean, modern logo exploration focusing on taste, balance, and culinary craftsmanship. This placeholder case study outlines the challenge, process, and final outcome.'
         },
         'bar-kada': {
             title: 'Bar-Kada Hospitality',
             category: 'Logo Design',
-            image: 'images/bar-kada-logo.jpg',
+            image: 'images/Bar-kada Business Card.jpg',
             description: 'Hospitality brand mark emphasizing warmth, community, and elevated service. This placeholder includes discovery, sketches, and refined wordmark development.'
         },
         'revitalize': {
             title: 'Revitalize IV Solutions',
             category: 'Logo Design',
-            image: 'images/revitalize-logo.jpg',
+            image: 'images/RIVS Visual Brand.jpg',
             description: 'Healthcare-oriented identity reflecting clarity, renewal, and approachable care. Placeholder narrative with concept directions and rationale.'
         },
         'food-fuel': {
             title: 'Food For Fuel',
             category: 'Logo Redesign',
-            image: 'images/food-for-fuel-logo.jpg',
+            image: '',
             description: 'Refreshed logo and color system designed for energy, performance, and trust. Placeholder case study covering before/after and systemization.'
         },
         'magazine': {
             title: 'Magazine Samples',
             category: 'Print Design',
-            image: 'images/magazine-samples.png',
+            image: '',
             description: 'Editorial layouts showcasing hierarchy, typography, and grid-driven compositions. Placeholder overview of spreads and typographic choices.'
         },
         'more': {
             title: 'More Work',
             category: 'Portfolio Collection',
-            image: 'images/profile.png',
+            image: 'images/Just Peachy Quick Brand Set.jpg',
             description: 'A curated selection of additional projects spanning branding and print design. Placeholder gallery and short write-ups.'
         }
     };

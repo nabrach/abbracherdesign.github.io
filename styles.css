@@ -93,15 +93,20 @@ main {
 }
 
 .nav-brand a {
-  font-size: var(--font-size-xl);
-  font-weight: 600;
-  color: var(--color-primary);
   text-decoration: none;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+}
+
+.nav-logo {
+  height: 40px;
+  width: auto;
   transition: var(--transition);
 }
 
-.nav-brand a:hover {
-  color: var(--color-accent);
+.nav-brand a:hover .nav-logo {
+  transform: scale(1.05);
 }
 
 .nav-links {
@@ -173,24 +178,14 @@ main {
   margin-bottom: var(--spacing-2xl);
 }
 
-.profile-placeholder {
+.profile-image {
   width: 200px;
   height: 200px;
   border-radius: var(--border-radius-full);
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
   margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-size-4xl);
-  font-weight: 600;
-  color: var(--color-white);
-  position: relative;
-  overflow: hidden;
-}
-
-.profile-placeholder::after {
-  content: 'AB';
+  display: block;
+  object-fit: cover;
+  object-position: center;
 }
 
 .hero-title {
@@ -313,6 +308,14 @@ section h2 {
   overflow: hidden;
 }
 
+.work-image-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
 .image-placeholder {
   width: 100%;
   height: 100%;
@@ -330,24 +333,12 @@ section h2 {
   content: 'Palate Logo';
 }
 
-.image-placeholder[data-project="bar-kada"]::after {
-  content: 'Bar-Kada';
-}
-
-.image-placeholder[data-project="revitalize"]::after {
-  content: 'Revitalize IV';
-}
-
 .image-placeholder[data-project="food-fuel"]::after {
   content: 'Food For Fuel';
 }
 
 .image-placeholder[data-project="magazine"]::after {
   content: 'Magazine';
-}
-
-.image-placeholder[data-project="more"]::after {
-  content: 'View More';
 }
 
 .work-info {
@@ -474,6 +465,28 @@ section h2 {
   background: linear-gradient(135deg, rgba(219, 141, 173, 0.05) 0%, rgba(241, 189, 227, 0.05) 100%);
 }
 
+.case-back {
+  margin-bottom: var(--spacing-xl);
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--color-neutral-light);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius);
+}
+
+.back-button:hover {
+  color: var(--color-primary);
+  background-color: rgba(219, 141, 173, 0.1);
+  transform: translateX(-4px);
+}
+
 .case-header {
   max-width: 900px;
   margin: 0 auto;
@@ -520,6 +533,10 @@ section h2 {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .nav-logo {
+    height: 32px;
+  }
+  
   .nav-links {
     display: none;
     position: absolute;
@@ -566,10 +583,9 @@ section h2 {
     font-size: var(--font-size-lg);
   }
   
-  .profile-placeholder {
+  .profile-image {
     width: 150px;
     height: 150px;
-    font-size: var(--font-size-3xl);
   }
   
   .hero-cta {
@@ -607,6 +623,10 @@ section h2 {
 }
 
 @media (max-width: 480px) {
+  .nav-logo {
+    height: 28px;
+  }
+  
   .nav {
     padding: var(--spacing-md);
   }
@@ -623,9 +643,8 @@ section h2 {
     font-size: var(--font-size-3xl);
   }
   
-  .profile-placeholder {
+  .profile-image {
     width: 120px;
     height: 120px;
-    font-size: var(--font-size-2xl);
   }
 }
