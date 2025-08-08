@@ -55,6 +55,13 @@ body {
   line-height: 1.6;
   color: var(--color-neutral-dark);
   background-color: var(--color-white);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
 }
 
 .container {
